@@ -34,3 +34,18 @@ jobs:
         with:
           name: remark-lint-report
           path: remark-lint-report.json
+
+  read-artifact:
+    needs: build # Ensure this job waits for 'build'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: remark-lint-report
+          path: ./artifact
+
+      - name: Show artifact content
+        run: |
+          echo "=== Content of lint report ==="
+          cat ./artifact/remark-lint-report.json
